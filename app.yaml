@@ -1,0 +1,22 @@
+application: ojournalclub
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /favicon\.ico
+  static_files: static/img/favicon.ico
+  upload: static/img/favicon\.ico
+
+- url: /static
+  static_dir: static
+
+- url: /js
+  static_dir: js
+
+- url: /threads/.*
+  script: thread_serve.py
+  login: required
+
+- url: /.*
+  script: hard_html_serve.py

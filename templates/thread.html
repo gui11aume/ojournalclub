@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Thread | The Grand Locus{% endblock %}
+{% block head %}<var id="section">#journalclub</var>{% endblock %}
+{% block body %}
+
+  {% for comment in comments %}
+    Hi there!!
+    {{comment.author.nickname}}
+    <br/>
+    <blockquote>{{comment.content|escape}}</blockquote>
+    <br/>
+    <hr/>
+  {% endfor %}
+
+  New comment:
+  <form action="/threads/newcomment" method="post">
+    <input type="hidden" name="path" value="{{path}}">
+    <div><textarea name="content" rows="3" cols="60"></textarea></div>
+    <div><input type="submit" value="Submit"></div>
+  </form>
+
+{% endblock %}
