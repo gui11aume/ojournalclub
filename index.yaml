@@ -1,0 +1,6 @@
+indexes:
+
+- kind: UserContent
+  ancestor: yes
+  properties:
+  - name: pubdate

@@ -1,22 +1,48 @@
 {% extends "base.html" %}
-{% block title %}Thread | The Grand Locus{% endblock %}
+{% block title %}{{page_title}} | The Grand Locus{% endblock %}
 {% block head %}<var id="section">#journalclub</var>{% endblock %}
 {% block body %}
+  
+  {% block thread_head %}{% endblock %}
 
-  {% for comment in comments %}
-    Hi there!!
-    {{comment.author.nickname}}
-    <br/>
-    <blockquote>{{comment.content|escape}}</blockquote>
-    <br/>
-    <hr/>
+  {% for usercontent in usercontents %}
+    {% if usercontent.is_crocodoc_iframe %}
+       <br/>
+       <br/>
+      {{usercontent.content|safe}}
+       <br/>
+       <br/>
+    {% else %}
+      <br/>
+      <span class="user_nickname">{{usercontent.author.nickname}}</span>
+      | {{usercontent.pubdate|date:"Y-m-d"}} 
+      <blockquote class="user_comment">{{usercontent.content|escape}}</blockquote>
+    {% endif %}
   {% endfor %}
 
-  New comment:
-  <form action="/threads/newcomment" method="post">
+  <br/>
+  Leave a comment (max 500 characters):
+  <form id="leave_a_comment" action="/threads/newusercontent" method="post">
     <input type="hidden" name="path" value="{{path}}">
-    <div><textarea name="content" rows="3" cols="60"></textarea></div>
+    <div><textarea class="comment_box" name="content" rows="4"></textarea></div>
     <div><input type="submit" value="Submit"></div>
   </form>
+
+  {% if user_is_admin %}
+    <br/>
+    Upload a Crocodoc iframe:
+    <form action="/threads/newusercontent" method="post">
+      <input type="hidden" name="path" value="{{path}}">
+      <input type="hidden" name="crocodoc" value="yes">
+      <div>
+         <textarea class="comment_box" name="content" rows="2"></textarea>
+      </div>
+      <div><input type="submit" value="Submit"></div>
+    </form>
+  {% else %}
+    <br/>
+    To upload a document, please contact the
+    <script>print_mail('administrator')</script>.
+  {% endif %}
 
 {% endblock %}

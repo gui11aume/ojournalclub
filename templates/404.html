@@ -1,13 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Page Not Found{% endblock %}
+{% block title %}Page Not Found | The Grand Locus{% endblock %}
 {% block body %}
-<div>
-  Whoops!  The page you were looking for was not found.  In the meantime, try this Google search!
-  <br />
-  <script type='text/javascript'>
-    var GOOG_FIXURL_LANG = 'en';
-    var GOOG_FIXURL_SITE = 'http://{{config.host}}';
-  </script>
-  <script type='text/javascript' src='http://linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js'></script>
+<div style="text-align:center;">
+  <h2>Whooops!!</h2>
+  <p>The page you were looking for was not found.</p>
 </div>
 {% endblock %}

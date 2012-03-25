@@ -24,6 +24,8 @@ def render_template(template_name, template_vals=None):
    try:
       tpl = loader.get_template(template_name)
       rendered = tpl.render(template.Context(template_vals))
+   except Exception, e:
+      raise e
    finally:
       _swap_settings(old_settings)
    return rendered
@@ -37,7 +39,13 @@ class HardHTMLServer(webapp.RequestHandler):
       path = re.sub('/$', '', path)
       if path == '':
          path = 'index.html'
-      self.response.out.write(render_template(path))
+      try:
+         rendered = render_template(path)
+      except Exception:
+         rendered = render_template('404.html')
+
+      self.response.out.write(rendered)
+
 
 application = webapp.WSGIApplication([
   ('/(.*)', HardHTMLServer),

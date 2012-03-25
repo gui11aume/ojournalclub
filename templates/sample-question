@@ -1,0 +1,8 @@
+{% extends "thread.html" %}
+{% block thread_head %}
+<h2>Sample question</h2>
+<p>
+  Here we try to setup the open journal club.
+</p>
+<br/>
+{% endblock %}

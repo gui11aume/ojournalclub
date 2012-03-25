@@ -13,43 +13,75 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 import models
 import hard_html_serve
 
+def user_is_admin(user):
+   return user.nickname() == 'guillaume.filion'
+
+def thread_is_open(path):
+   return path in (
+                     'sample-question',
+                  )
+
 class ThreadServer(webapp.RequestHandler):
    def get(self, path):
 
+      if not thread_is_open(path):
+         self.response.out.write(
+            hard_html_serve.render_template('404.html')
+         )
+         return
+
+      user = users.get_current_user()
+      if not user:
+         # User not logged in... Back to square 1.
+         self.redirect("/")
+
       # Query all user comments for that page.
-      try:
-         #query = models.UserComment.all().ancestor(
-         #   models.thread_key(path)).order('-date')
-         query = models.UserComment.all()
-         comments = query.fetch(10)
-      except:
-         comments = []
+      query = models.UserContent.all().ancestor(
+          models.thread_key(path)).order('pubdate')
+      contents = query.fetch(100)
 
       template_vals = {
-         'comments': comments,
+         'page_title': path,
+         'usercontents': contents,
          'path': path,
+         'user_is_admin': user_is_admin(user),
       }
 
-      self.response.out.write(hard_html_serve.render_template('thread.html', template_vals))
+      self.response.out.write(
+          hard_html_serve.render_template(path, template_vals)
+      )
 
 
-class NewCommentPostHandler(webapp.RequestHandler):
+class NewContentPostHandler(webapp.RequestHandler):
    def post(self):
+
+      user = users.get_current_user()
+      if not user:
+         self.redirect("/")
+
       path = self.request.get('path')
 
-      # Instantiate comment.
-      comment = models.UserComment(parent=models.thread_key(path))
-      if users.get_current_user():
-         comment.author = users.get_current_user()
-      comment.content = self.request.get('content')
-      comment.put()
+      # Instantiate content.
+      content = models.UserContent(parent=models.thread_key(path))
+      content.author = user
+      content.content = self.request.get('content')
 
+      is_crocodoc_iframe = self.request.get('crocodoc', False)
+      if is_crocodoc_iframe:
+         if user_is_admin(user):
+            content.is_crocodoc_iframe = True
+         else:
+            # Cheating??
+            self.redirect("/")
+
+      # Save and reload.
+      content.put()
       self.redirect('/threads/' + path)
 
 
 
 app= webapp.WSGIApplication([
-  ('/threads/newcomment', NewCommentPostHandler),
+  ('/threads/newusercontent', NewContentPostHandler),
   ('/threads/(.*)', ThreadServer),
 ])
 
