@@ -1,8 +1,9 @@
-{% extends "base.html" %}
+{% extends "ojc.html" %}
 {% block title %}{{page_title}} | The Grand Locus{% endblock %}
-{% block head %}<var id="section">#journalclub</var>{% endblock %}
 {% block body %}
   
+  <br/>
+  <br/>
   {% block thread_head %}{% endblock %}
 
   {% for usercontent in usercontents %}
@@ -14,7 +15,7 @@
        <br/>
     {% else %}
       <br/>
-      <span class="user_nickname">{{usercontent.author.nickname}}</span>
+      <span class="user_nickname">{{usercontent.author.email}}</span>
       | {{usercontent.pubdate|date:"Y-m-d"}} 
       <blockquote class="user_comment">{{usercontent.content|escape}}</blockquote>
     {% endif %}
