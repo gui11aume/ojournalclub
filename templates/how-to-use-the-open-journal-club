@@ -1,0 +1,11 @@
+{% extends "thread.html" %}
+{% block thread_head %}
+<h2>How to use the Open Journal Club?</h2>
+<p>
+Welcome to the Open Journal Club. This thread is meant for practice,
+so that you can see how to leave comments and annotate pdf documents.
+Feel free to leave irrelevant comments or discuss irrelevant topics
+with participants, but stick to the elementary rules of mutual respect.
+</p>
+<br/>
+{% endblock %}

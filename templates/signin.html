@@ -1,0 +1,14 @@
+{% extends "ojc.html" %}
+{% block body %}
+<br/>
+<br/>
+<h2>Sign in to the Open Journal Club</h2>
+
+<div align="center">
+<form action="/newuser" method="post">
+  - Please enter your name -<br/>
+  <input type="text" name="display_name"/>
+  <input type="submit" value="Submit"/>
+</form>
+</div>
+{% endblock %}

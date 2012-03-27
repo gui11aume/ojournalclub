@@ -18,5 +18,13 @@ handlers:
   script: thread_serve.py
   login: required
 
+- url: /signin.html
+  script: hard_html_serve.py
+  login: required
+
+- url: /newuser
+  script: thread_serve.py
+  login: required
+
 - url: /.*
   script: hard_html_serve.py

@@ -15,7 +15,7 @@
        <br/>
     {% else %}
       <br/>
-      <span class="user_nickname">{{usercontent.author.email}}</span>
+      <span class="author_name">{{usercontent.display_name}}</span>
       | {{usercontent.pubdate|date:"Y-m-d"}} 
       <blockquote class="user_comment">{{usercontent.content|escape}}</blockquote>
     {% endif %}
