@@ -1,0 +1,11 @@
+{% extends "thread.html" %}
+{% block thread_head %}
+<h2>Do histone modifications affect TF binding?</h2>
+<p>
+The goal of this discussion is to gather and discuss the evidence (if any)
+that histone modifications can directly affect transcription factor (TFs)
+binding <em>in vivo</em>. Please note that the discussion is about histone
+modifications and not about chromatin remodelling in general.
+</p>
+<br/>
+{% endblock %}

@@ -19,6 +19,7 @@ def user_is_admin(user):
 def thread_is_open(path):
    return path in (
                      'how-to-use-the-open-journal-club',
+                     'do-histone-modifications-affect-TF-binding',
                   )
 
 class ThreadServer(webapp.RequestHandler):
