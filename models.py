@@ -15,7 +15,7 @@ class UserContent (db.Model):
    """Model for comments and crocodoc iframes."""
    author = db.UserProperty()
    display_name = db.StringProperty()
-   content = db.StringProperty(multiline=True)
+   content = db.TextProperty()
    is_crocodoc_iframe = db.BooleanProperty(default=False)
    pubdate = db.DateTimeProperty(auto_now_add=True)
 
